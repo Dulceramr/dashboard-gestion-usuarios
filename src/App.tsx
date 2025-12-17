@@ -4,7 +4,7 @@ import './App.css';
 // Páginas crarlas dsp
 import Login from './paginas/Login';
 import ProtectedRoute from './componentes/Layout/ProtectedRoute';
-// import UsersPage from './paginas/Users';
+import Users from './paginas/Users';
 // import UserDetailPage from './paginas/UserDetail';
 
 function App() {
@@ -22,7 +22,7 @@ function App() {
           {/* Ruta protegida del Dashboard/Lista de Usuarios */}
           <Route path="/users" element={
             <ProtectedRoute>
-              <div className="page users-page">...contenido actual...</div>
+              <Users /> 
             </ProtectedRoute>
           } />
           
