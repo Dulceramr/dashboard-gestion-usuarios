@@ -1,19 +1,104 @@
-.App {
-  text-align: center;
-  padding: 1rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
+/* ===== PALETA DE COLORES PROFESIONAL ===== */
 :root {
-  --color-primary: #2563eb;
-  --color-danger: #dc2626;
+  /* Neutros (Base blanca y grises sutiles) */
+  --color-background: #FFFFFF;
+  --color-surface: #F8FAFC;
+  --color-surface-hover: #F1F5F9;
+  --color-border: #E2E8F0;
+  --color-text-primary: #1E293B;
+  --color-text-secondary: #64748B;
+  --color-text-muted: #94A3B8;
+
+  /* Color Principal & Acento */
+  --color-primary: #2563EB;        /* Azul confiable - Botones primarios, encabezados */
+  --color-primary-hover: #1D4ED8;
+  --color-accent: #F59E0B;         /* Ámbar - Alertas, destacados, acciones secundarias */
+
+  /* Estados Semánticos */
+  --color-success: #10B981;        /* Verde - Confirmaciones, éxito */
+  --color-warning: #F59E0B;        /* Ámbar - Advertencias (comparte con acento) */
+  --color-error: #EF4444;          /* Rojo - Errores, eliminación */
+  --color-info: #3B82F6;           /* Azul - Información */
+
+  /* Espaciado y Bordes */
+  --radius-md: 8px;                /* Radio "moderado" - ni circular ni recto */
+  --radius-sm: 4px;
   --spacing-sm: 0.5rem;
   --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
 }
 
+/* ===== ESTILOS GLOBALES ===== */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  line-height: 1.5;
+}
+
+.app-container {
+  min-height: 100vh;
+  padding: var(--spacing-md);
+}
+
+/* ===== COMPONENTES REUTILIZABLES ===== */
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--spacing-xl);
+}
+
+.card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+  margin-top: var(--spacing-md);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-top: var(--spacing-md);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-hover);
+}
+
+/* ===== ESTILOS ESPECÍFICOS DE PÁGINA ===== */
+.login-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  text-align: center;
+}
+
+.users-page h1 {
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-md);
+}
+
+.not-found {
+  text-align: center;
+  padding-top: var(--spacing-xl);
+  color: var(--color-text-secondary);
 }
