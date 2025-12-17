@@ -1,26 +1,60 @@
 import { useState, useEffect } from 'react';
 
 export interface Usuario {
-  gender: string;
+  gender: 'male' | 'female';
   name: {
+    title: string;
     first: string;
     last: string;
+  };
+  location: {
+    street: {
+      number: number;
+      name: string;
+    };
+    city: string;
+    state: string;
+    country: string;
+    postcode: string | number;
+    coordinates: {
+      latitude: string;
+      longitude: string;
+    };
+    timezone: {
+      offset: string;
+      description: string;
+    };
   };
   email: string;
   login: {
     uuid: string;
+    username: string;
+    password: string;
+    salt: string;
+    md5: string;
+    sha1: string;
+    sha256: string;
   };
   dob: {
+    date: string;  
     age: number;
-    date: string;
   };
-  location: {
-    country: string;
+  registered: {
+    date: string;  
+    age: number;
   };
   phone: string;
-  picture: {
-    large: string;
+  cell: string;
+  id: {
+    name: string;
+    value: string | null;
   };
+  picture: {
+    large: string;   
+    medium: string;  
+    thumbnail: string; 
+  };
+  nat: string;  
 }
 
 interface CacheData {
@@ -29,7 +63,7 @@ interface CacheData {
 }
 
 const CACHE_KEY = 'users_cache';
-const CACHE_DURATION = 5 * 60 * 1000; // 5 minutos en milisegundos
+const CACHE_DURATION = 5 * 60 * 1000; // 5 min
 
 export const useUsuarios = () => {
   const [usuarios, setUsuarios] = useState<Usuario[]>([]);
@@ -129,6 +163,24 @@ export const useUsuarios = () => {
     return [...new Set(nacionalidades)]; // Eliminar duplicados
   };
 
+  const eliminarUsuario = (userId: string) => {
+    setUsuarios(prevUsuarios => {
+      // Filtrar para quitar el usuario
+      const nuevosUsuarios = prevUsuarios.filter(
+        user => user.login.uuid !== userId
+      );
+      
+      // Actualizar el caché
+      saveToCache(nuevosUsuarios);
+      
+      return nuevosUsuarios;
+    });
+    
+    // limpiar caché de localStorage para ese usuario específico
+    const userDetailCacheKey = `user_${userId}`;
+    localStorage.removeItem(userDetailCacheKey);
+  };
+
   const filtrarUsuarios = (filtros: {
   genero: string;
   nacionalidad: string;
@@ -162,6 +214,7 @@ export const useUsuarios = () => {
     // Acciones
     recargarUsuarios,
     fetchUsuarios,
+    eliminarUsuario,
     
     // Utilidades
     filtrarPorGenero,

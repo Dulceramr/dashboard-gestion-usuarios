@@ -1,5 +1,8 @@
 import { useUsuarios } from '../../hooks/useUsuarios';
-import './ListaUsuarios.css'; // Estilos opcionales
+import { Link } from 'react-router-dom';
+import UserActions from './UserActions';
+import './ListaUsuarios.css'; 
+import './UserActions.css'; 
 
 interface Filtros {
   genero: string;
@@ -20,16 +23,26 @@ const ListaUsuarios = ({ filtros }: Props) => {
     totalUsuarios,
     hombres,
     mujeres,
-    filtrarUsuarios
+    filtrarUsuarios,
+    eliminarUsuario
   } = useUsuarios();
 
   // Filtrar usuarios si hay filtros
   const usuariosFiltrados = filtros ? filtrarUsuarios(filtros) : usuarios;
   const totalFiltrados = usuariosFiltrados.length;
 
-    // Calcular estadísticas de los usuarios filtrados
+  // Calcular estadísticas de los usuarios filtrados
   const hombresFiltrados = usuariosFiltrados.filter(u => u.gender === 'male').length;
   const mujeresFiltradas = usuariosFiltrados.filter(u => u.gender === 'female').length;
+
+  // Función para manejar eliminación (puedes personalizar esto)
+  const handleDeleteUser = (userId: string) => {
+    if (window.confirm('¿Estás seguro de eliminar este usuario?')) {
+      eliminarUsuario(userId);
+      // Puedes usar tu ToastNotificacion aquí
+      alert('Usuario eliminado exitosamente');
+    }
+  };
 
   if (cargando) {
     return (
@@ -79,6 +92,7 @@ const ListaUsuarios = ({ filtros }: Props) => {
               <th>Edad</th>
               <th>País</th>
               <th>Teléfono</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -91,11 +105,22 @@ const ListaUsuarios = ({ filtros }: Props) => {
                     className="user-avatar"
                   />
                 </td>
-                <td>{usuario.name.first} {usuario.name.last}</td>
+                <td>
+                  <Link to={`/users/${usuario.login.uuid}`} className="user-link">
+                    {usuario.name.first} {usuario.name.last}
+                  </Link>
+                </td>
                 <td>{usuario.email}</td>
                 <td>{usuario.dob.age}</td>
                 <td>{usuario.location.country}</td>
                 <td>{usuario.phone}</td>
+                <td>
+                  <UserActions 
+                    userId={usuario.login.uuid}
+                    userName={`${usuario.name.first} ${usuario.name.last}`}
+                    onDelete={handleDeleteUser}
+                  />
+                </td>
               </tr>
             ))}
           </tbody>

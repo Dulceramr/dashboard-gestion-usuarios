@@ -5,7 +5,7 @@ import './App.css';
 import Login from './paginas/Login';
 import ProtectedRoute from './componentes/Layout/ProtectedRoute';
 import Users from './paginas/Users';
-// import UserDetailPage from './paginas/UserDetail';
+import UserDetail from './paginas/UserDetail';
 
 function App() {
   return (
@@ -29,10 +29,7 @@ function App() {
           {/* Ruta de Detalle de Usuario (con parámetro :id) */}
           <Route path="/users/:id" element={
             <ProtectedRoute>
-              <div className="page detail-page">
-                <h1>Detalle del Usuario</h1>
-                <p>Vista detallada del usuario con ID específico.</p>
-              </div>
+              <UserDetail />
             </ProtectedRoute>
           } />
           
