@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './UserActions.css'; 
+import SendMessageModal from '../UI/SendMessageModal';
 
 interface UserActionsProps {
   userId: string;
@@ -14,6 +15,9 @@ const UserActions: React.FC<UserActionsProps> = ({
 }) => {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [showActions, setShowActions] = useState(false);
+  const [showMessageModal, setShowMessageModal] = useState(false);
+
+  console.log('🔄 UserActions render - showMessageModal:', showMessageModal);
 
   const handleDelete = () => {
     onDelete(userId);
@@ -43,7 +47,10 @@ const UserActions: React.FC<UserActionsProps> = ({
           {/* Botón enviar mensaje */}
           <button 
             className="action-btn message-btn"
-            onClick={() => alert(`Enviar mensaje a ${userName}`)}
+            onClick={() => {
+              console.log('🟢 Setting showMessageModal to TRUE');
+              setShowMessageModal(true)
+            }}
           >
             💬 Mensaje
           </button>
@@ -62,6 +69,16 @@ const UserActions: React.FC<UserActionsProps> = ({
       {!showActions && (
         <div className="actions-indicator">⋯</div>
       )}
+
+      <SendMessageModal
+        userId={userId}
+        userName={userName}
+        isOpen={showMessageModal}
+        onClose={() => {
+          console.log('🔴 Setting showMessageModal to FALSE');
+          setShowMessageModal(false)
+        }}
+      />
 
       {/* Modal de confirmación para eliminar */}
       {showDeleteConfirm && (
