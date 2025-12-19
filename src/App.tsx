@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import './App.scss';
 import { UsuariosProvider } from './context/UsuariosContext';
 import { MessagesProvider } from './context/MessagesContext';
@@ -12,7 +12,7 @@ function App() {
   return (
     <UsuariosProvider>
       <MessagesProvider>
-        <BrowserRouter>
+        <HashRouter>
           {/* Contenedor principal con la paleta de colores */}
           <div className="app-container">
             <Routes>
@@ -45,7 +45,7 @@ function App() {
               } />
             </Routes>
           </div>
-        </BrowserRouter>
+        </HashRouter>
       </MessagesProvider>
     </UsuariosProvider>
   );
