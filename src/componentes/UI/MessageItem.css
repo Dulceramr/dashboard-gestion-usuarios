@@ -27,11 +27,6 @@
   border-bottom-left-radius: 4px;
 }
 
-.message-item.unread {
-  background: #e3f2fd;
-  border-left: 4px solid #2196f3;
-}
-
 .message-header {
   display: flex;
   justify-content: space-between;
@@ -41,7 +36,7 @@
   opacity: 0.8;
 }
 
-.message-item.sent .message-header {
+.message-item .message-header {
   color: rgba(255, 255, 255, 0.9);
 }
 
@@ -59,24 +54,6 @@
 .message-content {
   line-height: 1.5;
   word-break: break-word;
-}
-
-.unread-indicator {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: 8px;
-  font-size: 11px;
-  color: #2196f3;
-  font-weight: 500;
-}
-
-.unread-dot {
-  width: 8px;
-  height: 8px;
-  background: #2196f3;
-  border-radius: 50%;
-  animation: pulse 2s infinite;
 }
 
 @keyframes pulse {

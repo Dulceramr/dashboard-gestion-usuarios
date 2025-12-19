@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import ListaUsuarios from '../componentes/Usuario/ListaUsuarios';
 import FiltrosUsuarios from '../componentes/Filtros/FiltrosUsuarios';
 import NotificacionExportacion from '../componentes/UI/NotificacionExportacion';
 import { exportarUsuariosACSV } from '../utilidades/exportarCSV'
 import { useUsuarios } from '../hooks/useUsuarios';
-import '../estilos/Users.css';
+import '../estilos/Users.scss';
 
 const Users = () => {
   const { usuarios, filtrarUsuarios } = useUsuarios();
@@ -25,11 +25,16 @@ const Users = () => {
     total: 0
   });
 
-  const aplicarFiltros = () => {
-    setFiltrosAplicados({...filtros});
-  };
+  const usuariosFiltrados = useMemo(() => 
+    filtrarUsuarios(filtrosAplicados), 
+    [filtrarUsuarios, filtrosAplicados]
+  );
 
-  const limpiarFiltros = () => {
+  const aplicarFiltros = useCallback(() => {
+    setFiltrosAplicados({...filtros});
+  }, [filtros]);
+
+  const limpiarFiltros = useCallback(() => {
     const filtrosLimpios = {
       genero: 'all',
       nacionalidad: 'all',
@@ -37,25 +42,22 @@ const Users = () => {
     };
     setFiltros(filtrosLimpios);
     setFiltrosAplicados(filtrosLimpios);
-  };
+  }, []);
 
   // Exportar a CSV
-  const handleExportarCSV = async () => {
+  const handleExportarCSV = useCallback(async () => {
     if (exportando) return;
     
     setExportando(true);
     
-    // 1. Obtener usuarios filtrados
-    const usuariosFiltrados = filtrarUsuarios(filtrosAplicados);
-    
-    // 2. Mostrar notificación
+    // 1. Mostrar notificación
     setNotificacion({
       visible: true,
       mensaje: 'Preparando exportación...',
       total: usuariosFiltrados.length
     });
     
-    // 3. Exportar (con retraso simulado para mostrar progreso)
+    // 2. Exportar (con retraso simulado)
     setTimeout(() => {
       setNotificacion(n => ({ ...n, mensaje: 'Generando archivo CSV...' }));
       
@@ -76,7 +78,7 @@ const Users = () => {
             mensaje: '✅ Exportación completada!'
           }));
           
-          // Cerrar notificación automáticamente después de 2 segundos
+          // Cerrar después de 2 segundos
           setTimeout(() => {
             setNotificacion({ visible: false, mensaje: '', total: 0 });
             setExportando(false);
@@ -87,7 +89,19 @@ const Users = () => {
         }
       }, 800);
     }, 500);
-  };
+  }, [exportando, usuariosFiltrados]);
+
+  // MEMOIZAR función para cerrar notificación
+  const handleCerrarNotificacion = useCallback(() => {
+    setNotificacion({ visible: false, mensaje: '', total: 0 });
+    setExportando(false);
+  }, []);
+
+  // MEMOIZAR función de logout
+  const handleLogout = useCallback(() => {
+    sessionStorage.clear();
+    window.location.href = '/login';
+  }, []);
 
   return (
     <div className="dashboard-container">
@@ -96,10 +110,7 @@ const Users = () => {
         visible={notificacion.visible}
         mensaje={notificacion.mensaje}
         totalUsuarios={notificacion.total}
-        onCerrar={() => {
-          setNotificacion({ visible: false, mensaje: '', total: 0 });
-          setExportando(false);
-        }}
+        onCerrar={handleCerrarNotificacion}
       />
 
       <header className="dashboard-header">
@@ -110,7 +121,7 @@ const Users = () => {
           </p>
         </div>
         <div className="user-actions">
-          {/* Botón de exportar ACTUALIZADO */}
+          {/* Botón de exportar*/}
           <button 
             className={`btn-secondary ${exportando ? 'exportando' : ''}`}
             onClick={handleExportarCSV}
@@ -119,10 +130,7 @@ const Users = () => {
             {exportando ? '⏳ Exportando...' : '📤 Exportar CSV'}
           </button>
           
-          <button className="btn-logout" onClick={() => {
-            sessionStorage.clear();
-            window.location.href = '/login';
-          }}>
+          <button className="btn-logout" onClick={handleLogout}>
             👋 Cerrar Sesión
           </button>
         </div>

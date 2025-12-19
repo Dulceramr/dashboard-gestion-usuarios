@@ -31,7 +31,7 @@ const MessageItem: React.FC<MessageItemProps> = ({ message }) => {
 
   return (
     <div 
-      className={`message-item ${message.type} ${!message.read && message.type === 'received' ? 'unread' : ''}`}
+      className="message-item"
     >
       <div className="message-header">
         <span className="message-type">

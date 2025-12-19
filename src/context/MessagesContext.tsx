@@ -8,7 +8,6 @@ export interface Message {
   content: string;
   timestamp: Date;
   type: 'sent' | 'received';
-  read: boolean;
 }
 
 interface MessagesContextType {
@@ -46,7 +45,6 @@ export const MessagesProvider = ({ children }: { children: ReactNode }) => {
       content: content.trim(),
       timestamp: new Date(),
       type: 'sent',
-      read: true,
     };
 
     // Respuesta automática
@@ -57,7 +55,6 @@ export const MessagesProvider = ({ children }: { children: ReactNode }) => {
       content: `Gracias por tu mensaje! Te responderé pronto.`,
       timestamp: new Date(Date.now() + 3000),
       type: 'received',
-      read: false,
     };
 
     setMessages(prev => {

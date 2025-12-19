@@ -26,7 +26,6 @@ const NotificacionExportacion = ({
             <button className="btn-cerrar" onClick={onCerrar}>×</button>
           )}
         </div>
-        
         <div className="notificacion-body">
           <div className="notificacion-icono">
             <div className="spinner-export"></div>

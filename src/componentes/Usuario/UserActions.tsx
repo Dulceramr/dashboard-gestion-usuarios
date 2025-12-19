@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import './UserActions.css'; 
+import { useState, useCallback, memo } from 'react';
+import { Link } from 'react-router-dom';
+import './UserActions.scss'; 
 import SendMessageModal from '../UI/SendMessageModal';
 
 interface UserActionsProps {
@@ -8,30 +9,36 @@ interface UserActionsProps {
   onDelete: (id: string) => void;
 }
 
-const UserActions: React.FC<UserActionsProps> = ({ 
+const UserActions = memo(({ 
   userId, 
   userName, 
   onDelete 
-}) => {
+}: UserActionsProps) => {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [showActions, setShowActions] = useState(false);
   const [showMessageModal, setShowMessageModal] = useState(false);
 
-  console.log('🔄 UserActions render - showMessageModal:', showMessageModal);
+    // MEMORIZAR handlers para evitar renders
+  const handleMouseEnter = useCallback(() => setShowActions(true), []);
+  const handleMouseLeave = useCallback(() => {
+    setShowActions(false);
+    setShowDeleteConfirm(false);
+  }, []);
+  
+  const handleDeleteClick = useCallback(() => setShowDeleteConfirm(true), []);
+  const handleCloseMessageModal = useCallback(() => setShowMessageModal(false), []);
+  const handleOpenMessageModal = useCallback(() => setShowMessageModal(true), []);
 
-  const handleDelete = () => {
+  const handleDelete = useCallback(() => {
     onDelete(userId);
     setShowDeleteConfirm(false);
-  };
+  }, [onDelete, userId]);
 
   return (
     <div 
       className="user-actions-container"
-      onMouseEnter={() => setShowActions(true)}
-      onMouseLeave={() => {
-        setShowActions(false);
-        setShowDeleteConfirm(false);
-      }}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       {/* Botón de menú (solo en hover) */}
       {showActions && (
@@ -39,7 +46,8 @@ const UserActions: React.FC<UserActionsProps> = ({
           {/* Botón eliminar */}
           <button 
             className="action-btn delete-btn"
-            onClick={() => setShowDeleteConfirm(true)}
+            onClick={handleDeleteClick}
+            title="Eliminar usuario"
           >
             🗑️ Eliminar
           </button>
@@ -47,21 +55,17 @@ const UserActions: React.FC<UserActionsProps> = ({
           {/* Botón enviar mensaje */}
           <button 
             className="action-btn message-btn"
-            onClick={() => {
-              console.log('🟢 Setting showMessageModal to TRUE');
-              setShowMessageModal(true)
-            }}
+            onClick={handleOpenMessageModal}
           >
             💬 Mensaje
           </button>
           
           {/* Botón ver detalles */}
-          <a 
-            href={`/users/${userId}`}
+          <Link to={`/users/${userId}`}
             className="action-btn detail-btn"
           >
             👁️ Ver
-          </a>
+          </Link>
         </div>
       )}
 
@@ -74,10 +78,7 @@ const UserActions: React.FC<UserActionsProps> = ({
         userId={userId}
         userName={userName}
         isOpen={showMessageModal}
-        onClose={() => {
-          console.log('🔴 Setting showMessageModal to FALSE');
-          setShowMessageModal(false)
-        }}
+        onClose={handleCloseMessageModal}
       />
 
       {/* Modal de confirmación para eliminar */}
@@ -111,6 +112,6 @@ const UserActions: React.FC<UserActionsProps> = ({
       )}
     </div>
   );
-};
+});
 
 export default UserActions;

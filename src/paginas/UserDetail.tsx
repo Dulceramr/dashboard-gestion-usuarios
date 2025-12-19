@@ -143,12 +143,10 @@ const UserDetail = () => {
         userId={usuario.login.uuid}
         userName={`${usuario.name.first} ${usuario.name.last}`}
         isOpen={showMessageModal}
-        onClose={() => setShowMessageModal(false)}
-        onSuccess={() => console.log('Mensaje enviado')}
+        onClose={() => setShowMessageModal(false)} 
       />
     </div>
   );
 };
 
-// ¡IMPORTANTE! Esta línea debe estar al final
 export default UserDetail;

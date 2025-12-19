@@ -10,11 +10,11 @@ interface Filtros {
 interface Props {
   filtros: Filtros;
   setFiltros: (filtros: Filtros) => void;
-  onAplicar: () => void;      // Nueva prop
-  onLimpiar: () => void;      // Nueva prop
+  onAplicar: () => void;
+  onLimpiar: () => void;
 }
 
-const FiltrosUsuarios =  ({ filtros, setFiltros, onAplicar, onLimpiar }: Props) => {
+const FiltrosUsuarios = ({ filtros, setFiltros, onAplicar, onLimpiar }: Props) => {
   const { getNacionalidades } = useUsuarios();
   const nacionalidades = getNacionalidades();
 
@@ -32,19 +32,6 @@ const FiltrosUsuarios =  ({ filtros, setFiltros, onAplicar, onLimpiar }: Props) 
     if (tipo === 'min' && valor > filtros.rangoEdad.max) return;
     if (tipo === 'max' && valor < filtros.rangoEdad.min) return;
     setFiltros({ ...filtros, rangoEdad: nuevoRango });
-  };
-
-  const aplicarFiltros = () => {
-    alert(`Filtros aplicados:\nGénero: ${filtros.genero}\nNacionalidad: ${filtros.nacionalidad}\nEdad: ${filtros.rangoEdad.min}-${filtros.rangoEdad.max}`);
-    // Aquí luego conectarás con la lógica real de filtrado
-  };
-
-  const limpiarFiltros = () => {
-    setFiltros({
-      genero: 'all',
-      nacionalidad: 'all',
-      rangoEdad: { min: 18, max: 100 }
-    });
   };
 
   return (

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useMessages } from '../../context/MessagesContext';
 import './SendMessageModal.css';
 
@@ -19,8 +19,11 @@ const SendMessageModal: React.FC<SendMessageModalProps> = ({
   const [isSending, setIsSending] = useState(false);
   const { sendMessage } = useMessages();
 
-  console.log('🎯 Modal props:', { userId, userName, isOpen });
-  console.log('🔧 useMessages hook:', useMessages());
+    useEffect(() => {
+    if (isOpen) {
+      console.log('🎯 Modal abierto para:', userName);
+    }
+  }, [isOpen, userName]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

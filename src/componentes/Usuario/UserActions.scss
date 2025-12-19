@@ -1,0 +1,232 @@
+
+.user-actions-container {
+  position: relative;
+  display: inline-block;
+  min-width: 32px; 
+  text-align: center;
+  
+  @media (min-width: 768px) {
+    min-width: 40px; 
+  }
+}
+
+.actions-indicator {
+  color: var(--color-text-secondary);
+  font-size: 18px; 
+  cursor: default;
+  user-select: none;
+  
+  @media (min-width: 768px) {
+    font-size: 20px;
+  }
+}
+
+.actions-menu {
+  position: absolute;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  display: flex;
+  animation: fadeIn 0.2s ease;
+  
+  right: -8px;
+  top: 25px;
+  flex-direction: column;
+  gap: 4px;
+  padding: 6px;
+  min-width: 120px;
+  
+  @media (min-width: 768px) {
+    
+    right: 0;
+    top: 0;
+    flex-direction: row;
+    gap: 6px;
+    padding: 8px;
+    min-width: auto;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.action-btn {
+  padding: 6px 8px; 
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  font-size: 11px; 
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s;
+  text-decoration: none;
+  justify-content: flex-start; 
+  
+  @media (min-width: 768px) {
+    padding: 6px 10px;
+    font-size: 12px;
+    justify-content: center; 
+  }
+  
+  &:hover {
+    background: var(--color-surface-hover);
+  }
+}
+
+.action-btn.delete-btn {
+  &:hover {
+    background: rgba(211, 47, 47, 0.1);
+    color: #d32f2f;
+  }
+}
+
+.action-btn.message-btn {
+  &:hover {
+    background: rgba(56, 142, 60, 0.1);
+    color: #388e3c;
+  }
+}
+
+.confirm-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px; 
+  
+  @media (min-width: 768px) {
+    padding: 0;
+  }
+}
+
+.confirm-modal {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  animation: modalAppear 0.3s ease;
+  padding: 20px;
+  
+  @media (min-width: 768px) {
+    padding: 24px;
+  }
+}
+
+@keyframes modalAppear {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.confirm-modal h3 {
+  margin: 0 0 12px 0;
+  color: var(--color-text-primary);
+  font-size: 18px; 
+  
+  @media (min-width: 768px) {
+    font-size: 20px;
+  }
+}
+
+.confirm-modal p {
+  margin: 0 0 20px 0;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  font-size: 14px; 
+  
+  @media (min-width: 768px) {
+    font-size: 16px;
+    margin-bottom: 24px;
+  }
+}
+
+.modal-actions {
+  display: flex;
+  gap: 8px; 
+  
+  @media (min-width: 768px) {
+    gap: 12px;
+  }
+  
+  @media (max-width: 380px) {
+    flex-direction: column;
+  }
+}
+
+.modal-btn {
+  padding: 10px 16px; 
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+  font-size: 14px;
+  flex: 1; 
+  
+  @media (min-width: 768px) {
+    padding: 10px 20px;
+    flex: none; 
+  }
+}
+
+.modal-btn.confirm-delete {
+  background: #d32f2f;
+  color: white;
+  
+  &:hover {
+    background: #b71c1c;
+  }
+}
+
+.modal-btn.cancel {
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
+  
+  &:hover {
+    background: var(--color-surface-hover);
+  }
+}
+
+@media (max-width: 767px) {
+
+  .user-actions-container {
+    min-width: 28px;
+  }
+  
+  .actions-menu {
+    right: -5px;
+    top: 22px;
+    min-width: 110px;
+  }
+  
+  .action-btn {
+    padding: 5px 6px;
+    font-size: 10px;
+  }
+  
+  @media (max-width: 380px) {
+    .action-btn {
+      span {
+        display: none; 
+      }
+    }
+    
+    .actions-menu {
+      min-width: 80px;
+    }
+  }
+}
