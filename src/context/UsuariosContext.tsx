@@ -54,7 +54,6 @@ export const UsuariosProvider: React.FC<{ children: React.ReactNode }> = ({ chil
             const parsed: CacheData = JSON.parse(cached);
             const ahora = Date.now();
             if (ahora - parsed.timestamp <= CACHE_DURATION) {
-            console.log('📦 Cargando desde caché en estado inicial');
             return parsed.data;
             }
         } catch {}
@@ -103,15 +102,12 @@ export const UsuariosProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       if (!forceRefresh) {
         const cached = getCachedData();
         if (cached) {
-          console.log('📦 [CONTEXTO] Usando datos en caché');
           setUsuarios(cached.data);
           setCargando(false);
           return;
         }
       }
 
-      // Si no hay caché, hacer fetch
-      console.log('🌐 [CONTEXTO] Haciendo fetch a la API');
       const response = await fetch('https://randomuser.me/api/?results=50&seed=envioclick');
       
       if (!response.ok) {
@@ -120,8 +116,6 @@ export const UsuariosProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       
       const json = await response.json();
       const usuariosData = json.results;
-
-      console.log('📊 Usuarios recibidos:', usuariosData.length);
       
       // Guardar en estado y caché
       setUsuarios(usuariosData);
@@ -183,7 +177,6 @@ export const UsuariosProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     });
   }, [usuarios]);
 
-  // Función para obtener nacionalidades únicas
   const getNacionalidades = useCallback(() => {
     const nacionalidades = usuarios.map(user => user.location.country);
     return [...new Set(nacionalidades)];

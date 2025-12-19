@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useMessages } from '../../context/MessagesContext';
 import './SendMessageModal.css';
 
@@ -19,12 +19,6 @@ const SendMessageModal: React.FC<SendMessageModalProps> = ({
   const [isSending, setIsSending] = useState(false);
   const { sendMessage } = useMessages();
 
-    useEffect(() => {
-    if (isOpen) {
-      console.log('🎯 Modal abierto para:', userName);
-    }
-  }, [isOpen, userName]);
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -32,15 +26,10 @@ const SendMessageModal: React.FC<SendMessageModalProps> = ({
       alert('Por favor escribe un mensaje');
       return;
     }
-
-    console.log('📝 Enviando mensaje:', message);
     setIsSending(true);
     
     try {
-      // Llama a la función del contexto
       sendMessage(userId, userName, message);
-      
-      console.log('✅ Mensaje enviado exitosamente');
       alert(`✅ Mensaje enviado a ${userName}`);
       
       setMessage('');

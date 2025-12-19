@@ -35,9 +35,7 @@ export const MessagesProvider = ({ children }: { children: ReactNode }) => {
     return [];
   });
 
-  const sendMessage = useCallback((userId: string, userName: string, content: string) => {
-    console.log('🚀 ENVIANDO MENSAJE:', { userId, userName, content });
-    
+  const sendMessage = useCallback((userId: string, userName: string, content: string) => {    
     const newMessage: Message = {
       id: `msg_${Date.now()}`,
       userId,
@@ -60,7 +58,6 @@ export const MessagesProvider = ({ children }: { children: ReactNode }) => {
     setMessages(prev => {
       const updated = [...prev, newMessage, autoReply];
       localStorage.setItem('user_messages', JSON.stringify(updated));
-      console.log('💾 Mensajes guardados:', updated);
       return updated;
     });
 
