@@ -27,44 +27,56 @@ La aplicación utiliza una paleta de colores moderna y accesible:
 - **Estados:** Verde (`#10B981`), Rojo (`#EF4444`), Azul (`#3B82F6`)
 
 ## 🏗️ Estructura del Proyecto
+```text
 src/
-├── 📁 assets/ # Recursos estáticos (imágenes, iconos)
-├── 📁 componentes/ # Componentes React
-│ ├── 📁 filtros/ # Componentes de filtrado
-│ │ └── FiltrosUsuarios.tsx
-│ ├── 📁 layout/ # Componentes de layout
-│ │ └── ProtectedRoute.tsx
-│ ├── 📁 ui/ # Componentes de UI reutilizables
-│ │ ├── MessageHistory.tsx
-│ │ ├── MessageItem.tsx
-│ │ ├── NotificacionExportacion.tsx
-│ │ ├── SendMessageModal.tsx
-│ │ └── ToastNotification.tsx
-│ └── 📁 usuario/ # Componentes específicos de usuario
-│ ├── ListaUsuarios.tsx
-│ └── UserActions.tsx
-├── 📁 context/ # Contextos React
-│ ├── MessageContext.tsx
-│ └── UsuariosContext.tsx
-├── 📁 estilos/ # Archivos SCSS
-│ ├── login.scss
-│ └── users.scss
-├── 📁 hooks/ # Custom Hooks
-│ ├── useUsuarios.ts
-│ └── useUsuariosMetrics.ts
-├── 📁 paginas/ # Páginas/rutas principales
-│ ├── Login.tsx
-│ ├── UserDetail.tsx
-│ ├── userdetail.css
-│ └── Users.tsx
-├── 📁 utilidades/ # Utilidades y helpers
-│ └── exportCSV.ts # Utilidad para exportar a CSV
-├── App.tsx # Componente principal
-├── index.css # Estilos globales
-├── main.scss # SCSS principal
-└── main.tsx # Punto de entrada
+├── 📁 assets/
+├── 📁 componentes/
+│   ├── 📁 filtros/
+│   │   └── FiltrosUsuarios.tsx
+│   ├── 📁 layout/
+│   │   └── ProtectedRoute.tsx
+│   ├── 📁 ui/
+│   │   ├── MessageHistory.tsx
+│   │   ├── MessageItem.tsx
+│   │   ├── NotificacionExportacion.tsx
+│   │   ├── SendMessageModal.tsx
+│   │   └── ToastNotification.tsx
+│   └── 📁 usuario/
+│       ├── ListaUsuarios.tsx
+│       └── UserActions.tsx
+├── 📁 context/
+│   ├── MessageContext.tsx
+│   └── UsuariosContext.tsx
+├── 📁 estilos/
+│   ├── login.scss
+│   └── users.scss
+├── 📁 hooks/
+│   ├── useUsuarios.ts
+│   └── useUsuariosMetrics.ts
+├── 📁 paginas/
+│   ├── Login.tsx
+│   ├── UserDetail.tsx
+│   ├── userdetail.css
+│   └── Users.tsx
+├── 📁 utilidades/
+│   └── exportCSV.ts
+├── App.tsx
+├── index.css
+├── main.scss
+└── main.tsx
+```
 
-text
+🎯 **La aplicación ya está funcionando en producción:**  
+🔗 **URL:** https://dulceramr.github.io/dashboard-gestion-usuarios
+
+## 📝 Credenciales de Acceso
+
+Para acceder a la aplicación, utiliza las siguientes credenciales:
+
+- **Usuario:** `admin`
+- **Contraseña:** `admin123`
+
+*Estas credenciales son para fines de demostración en la prueba técnica.*
 
 ## 🚀 Requisitos Previos
 
@@ -144,15 +156,6 @@ La aplicación estará disponible en: http://localhost:5173
 5. **Exportación** → Exportar datos filtrados/seleccionados a CSV
 6. **Logout** → Cierre de sesión seguro
 
-## 📝 Credenciales de Acceso
-
-Para acceder a la aplicación, utiliza las siguientes credenciales:
-
-- **Usuario:** `admin`
-- **Contraseña:** `admin123`
-
-*Estas credenciales son para fines de demostración en la prueba técnica.*
-
 ## ⚡ Optimizaciones Implementadas
 
 ### Caché de Datos
@@ -207,24 +210,21 @@ Para acceder a la aplicación, utiliza las siguientes credenciales:
 - **sessionStorage**: Para persistencia de sesión de login
 - **Estrategia de caché**: Validación por timestamp (5 minutos)
 
-💌 Nota Personal
-Apreciados Erick, Neydy e Isaac,
+## 💌 Nota Personal
+
+**Apreciados Erick, Neydy e Isaac,**
 
 Ha sido un reto muy enriquecedor desarrollar esta prueba técnica. He puesto especial atención en crear no solo una aplicación funcional, sino una base sólida que pueda escalar según las necesidades de EnvioClick.
 
 Cada decisión técnica fue tomada considerando:
 
-Mantenibilidad a largo plazo
-
-Rendimiento con datos reales
-
-Experiencia de usuario intuitiva
-
-Código limpio para el equipo
+- **Mantenibilidad** a largo plazo
+- **Rendimiento** con datos reales
+- **Experiencia de usuario** intuitiva
+- **Código limpio** para el equipo
 
 Estoy entusiasmada por la posibilidad de contribuir con mis habilidades al equipo de EnvioClick y enfrentar nuevos desafíos juntos.
 
-Saludos cordiales,
-
-Dulce Ramírez
-Frontend Developer
+**Saludos cordiales,**  
+**Dulce Ramírez**  
+*Frontend Developer*
