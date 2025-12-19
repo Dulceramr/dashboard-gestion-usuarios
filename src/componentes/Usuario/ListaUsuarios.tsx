@@ -26,7 +26,7 @@ const ListaUsuarios = ({ filtros }: Props) => {
     eliminarUsuario
   } = useUsuarios();
   
-  const { totalUsuarios, hombres, mujeres } = useUsuariosMetrics();
+  const { totalUsuarios } = useUsuariosMetrics();
 
   const [toast, setToast] = useState<{
     visible: boolean;

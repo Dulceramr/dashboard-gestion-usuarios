@@ -7,7 +7,7 @@ import { useUsuarios } from '../hooks/useUsuarios';
 import '../estilos/Users.scss';
 
 const Users = () => {
-  const { usuarios, filtrarUsuarios } = useUsuarios();
+  const { filtrarUsuarios } = useUsuarios();
   
   const [filtros, setFiltros] = useState({
     genero: 'all',
