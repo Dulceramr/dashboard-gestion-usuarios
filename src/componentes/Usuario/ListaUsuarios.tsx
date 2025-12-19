@@ -1,8 +1,10 @@
-import { useUsuarios } from '../../hooks/useUsuarios';
+import { useState, useCallback } from 'react';
+import { useUsuarios, useUsuariosMetrics } from '../../hooks/useUsuarios';
 import { Link } from 'react-router-dom';
 import UserActions from './UserActions';
-import './ListaUsuarios.css'; 
-import './UserActions.css'; 
+import ToastNotificacion from '../UI/ToastNotificacion'; 
+import './ListaUsuarios.scss'; 
+import './UserActions.scss'; 
 
 interface Filtros {
   genero: string;
@@ -20,12 +22,21 @@ const ListaUsuarios = ({ filtros }: Props) => {
     cargando, 
     error, 
     recargarUsuarios,
-    totalUsuarios,
-    hombres,
-    mujeres,
     filtrarUsuarios,
     eliminarUsuario
   } = useUsuarios();
+  
+  const { totalUsuarios, hombres, mujeres } = useUsuariosMetrics();
+
+  const [toast, setToast] = useState<{
+    visible: boolean;
+    message: string;
+    type: 'success' | 'error' | 'info';
+  }>({
+    visible: false,
+    message: '',
+    type: 'info'
+  });
 
   // Filtrar usuarios si hay filtros
   const usuariosFiltrados = filtros ? filtrarUsuarios(filtros) : usuarios;
@@ -35,14 +46,27 @@ const ListaUsuarios = ({ filtros }: Props) => {
   const hombresFiltrados = usuariosFiltrados.filter(u => u.gender === 'male').length;
   const mujeresFiltradas = usuariosFiltrados.filter(u => u.gender === 'female').length;
 
-  // Función para manejar eliminación (puedes personalizar esto)
-  const handleDeleteUser = (userId: string) => {
-    if (window.confirm('¿Estás seguro de eliminar este usuario?')) {
+  const showToast = useCallback((message: string, type: 'success' | 'error' | 'info' = 'info') => {
+    setToast({
+      visible: true,
+      message,
+      type
+    });
+  }, []);
+
+  const handleDeleteUser = useCallback((userId: string) => {
+    try {
       eliminarUsuario(userId);
-      // Puedes usar tu ToastNotificacion aquí
-      alert('Usuario eliminado exitosamente');
+      showToast('✅ Usuario eliminado exitosamente', 'success');
+    } catch (error) {
+      showToast('❌ Error al eliminar el usuario', 'error');
     }
-  };
+  }, [eliminarUsuario, showToast]);
+
+  const handleRecargar = useCallback(() => {
+    showToast('🔄 Recargando usuarios...', 'info');
+    recargarUsuarios();
+  }, [recargarUsuarios, showToast]);
 
   if (cargando) {
     return (
@@ -66,17 +90,31 @@ const ListaUsuarios = ({ filtros }: Props) => {
 
   return (
     <div className="lista-usuarios-container">
+      {toast.visible && (
+        <ToastNotificacion
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast(prev => ({ ...prev, visible: false }))}
+        />
+      )}
       <div className="header-dashboard">
         <h2>Dashboard de Usuarios</h2>
         <div className="stats">
-          <span>👥 Total: {totalUsuarios}</span>
+          <span>👥 Total: {totalFiltrados}</span>
           <span>👨 Hombres: {hombresFiltrados}</span>
           <span>👩 Mujeres: {mujeresFiltradas}</span>
-          {filtros && (filtros.genero !== 'all' || filtros.nacionalidad !== 'all') && (
-            <span className="filtro-activo">✅ Mostrando: {totalFiltrados}</span>
+            {filtros && (
+            filtros.genero !== 'all' || 
+            filtros.nacionalidad !== 'all' ||
+            filtros.rangoEdad.min !== 18 || 
+            filtros.rangoEdad.max !== 100
+          ) && (
+            <span className="filtro-activo">
+              ✅ Mostrando: {totalFiltrados} de {totalUsuarios}
+            </span>
           )}
         </div>
-        <button onClick={recargarUsuarios} className="btn-refresh">
+        <button onClick={handleRecargar} className="btn-refresh">
           🔄 Actualizar
         </button>
       </div>
@@ -129,9 +167,9 @@ const ListaUsuarios = ({ filtros }: Props) => {
 
       {totalFiltrados === 0 && !cargando && (
         <div className="sin-resultados">
-          <p>😔 No se encontraron usuarios con los filtros aplicados.</p>
+          <p>No se encontraron usuarios con los filtros aplicados.</p>
           <button onClick={() => window.location.reload()} className="btn-limpiar">
-            🔄 Mostrar todos los usuarios
+            Mostrar todos los usuarios
           </button>
         </div>
       )}

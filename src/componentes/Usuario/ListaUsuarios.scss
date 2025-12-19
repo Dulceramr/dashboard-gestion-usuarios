@@ -5,11 +5,16 @@
 
 .header-dashboard {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
-  align-items: center;
+  align-items: stretch;
   margin-bottom: var(--spacing-lg);
   flex-wrap: wrap;
   gap: var(--spacing-md);
+
+  @media (min-width: 768px) { 
+    align-items: center;
+  }
 }
 
 .stats {
@@ -19,6 +24,10 @@
   padding: var(--spacing-md);
   border-radius: var(--radius-md);
   border: 1px solid var(--color-border);
+  max-width: 95%;
+  flex-direction: column;
+    justify-content: space-around;
+  
 }
 
 .stats span {
@@ -53,9 +62,26 @@
   background-color: var(--color-background);
 }
 
+  .usuarios-table th:nth-child(3),
+  .usuarios-table td:nth-child(3),
+  .usuarios-table th:nth-child(4),
+  .usuarios-table td:nth-child(4),
+  .usuarios-table th:nth-child(5),
+  .usuarios-table td:nth-child(5),
+  .usuarios-table th:nth-child(6),
+  .usuarios-table td:nth-child(6) {
+    display: none;
+
+    
+    @media (min-width: 768px) { 
+      display: inline-flex;
+      align-items: center;
+    }
+  }
+
 .usuarios-table th {
   background-color: var(--color-surface);
-  padding: var(--spacing-md);
+  padding: var(--spacing-sm);
   text-align: left;
   font-weight: 600;
   color: var(--color-text-primary);
@@ -65,23 +91,47 @@
 .usuarios-table td {
   padding: var(--spacing-md);
   border-bottom: 1px solid var(--color-border);
+  
 }
+
+  .usuarios-table th, 
+  .usuarios-table td {
+    font-size: 0.9rem;
+    @media (min-width: 768px){
+      padding: var(--spacing-md);
+    }
+    
+    
+  }
 
 .usuarios-table tr:hover {
   background-color: var(--color-surface-hover);
 }
 
 .user-avatar {
-  width: 40px;
-  height: 40px;
+  width: 32px;
+    height: 32px;
+  
   border-radius: 50%;
   object-fit: cover;
+
+  @media (min-width: 768px) {
+    width: 40px;
+    height: 40px;
+  }
+  
 }
 
 .user-link {
   color: var(--color-primary);
   text-decoration: none;
-  font-weight: 500;
+
+      font-size: 14px;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 120px;
 }
 
 .user-link:hover {
@@ -137,27 +187,4 @@
   text-align: center;
   color: var(--color-text-muted);
   font-size: 0.9rem;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .header-dashboard {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  
-  .stats {
-    justify-content: space-around;
-  }
-  
-  .usuarios-table th, 
-  .usuarios-table td {
-    padding: var(--spacing-sm);
-    font-size: 0.9rem;
-  }
-  
-  .user-avatar {
-    width: 32px;
-    height: 32px;
-  }
 }

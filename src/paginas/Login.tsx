@@ -1,6 +1,6 @@
-import { useState, FormEvent } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../estilos/Login.css'; // Lo crearemos después
+import '../estilos/Login.scss';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -25,7 +25,7 @@ const Login = () => {
     if (error) setError('');
   };
 
-  const manejarSubmit = (e: FormEvent) => {
+  const manejarSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setCargando(true);
     
@@ -41,7 +41,6 @@ const Login = () => {
         // 2. Redirigir al dashboard de usuarios
         navigate('/users');
         
-        // 3. (Opcional) Podrías guardar un token JWT real aquí
       } else {
         setError('Usuario o contraseña incorrectos. Usa: admin / admin123');
       }
@@ -106,7 +105,7 @@ const Login = () => {
           </button>
         </form>
 
-        {/* Nota para evaluadores (puedes quitarla después) */}
+        {/* Nota credenciales*/}
         <div className="login-note">
           <p><strong>Credenciales para prueba:</strong></p>
           <p>Usuario: <code>admin</code> | Contraseña: <code>admin123</code></p>
